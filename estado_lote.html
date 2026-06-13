@@ -45,10 +45,14 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbxHHlu-hBr8ytcu084bJ3ebxniyXoEI-vOG0wWvGGBIPmjkeX0hU6-BIbeRvIaNgAQYdg/exec";
 
 const params = new URLSearchParams(window.location.search);
-
 const LOTE = params.get("lote");
 
 const fondo = document.getElementById("fondo");
+
+/* Detectar celular */
+const esMovil =
+    /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    .test(navigator.userAgent);
 
 async function actualizarColor(){
 
@@ -78,12 +82,6 @@ async function actualizarColor(){
         });
 
         if(!fila){
-
-            console.warn(
-                "Lote no encontrado:",
-                LOTE
-            );
-
             return;
         }
 
@@ -106,32 +104,33 @@ async function actualizarColor(){
             opacidad
         );
 
-        console.log(
-            "Actualizado:",
-            fila.ID_LOTE,
-            fila.ESTADO,
-            "#" + color,
-            opacidad
-        );
-
     }
     catch(error){
 
-        console.error(
-            "Error:",
-            error
-        );
+        console.error(error);
 
     }
 
 }
 
-actualizarColor();
+/* SOLO COMPUTADORA */
+if(!esMovil){
 
-setInterval(
-    actualizarColor,
-    5000
-);
+    actualizarColor();
+
+    setInterval(
+        actualizarColor,
+        5000
+    );
+
+}
+else{
+
+    console.log(
+        "Modo móvil: actualización desactivada"
+    );
+
+}
 
 </script>
 
