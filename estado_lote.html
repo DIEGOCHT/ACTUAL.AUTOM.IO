@@ -147,19 +147,31 @@ if(!esMovil){
 }
 else{
 
-    console.log(
-        "Modo móvil: actualización desactivada"
-    );
-
-    document.getElementById(
-        "mensajeMovil"
-    ).style.display = "block";
+    document.body.innerHTML = `
+        <div style="
+            width:100%;
+            height:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            font-family:Arial,sans-serif;
+            font-size:14px;
+            background:rgba(0,0,0,0.85);
+            color:white;
+            padding:15px;
+            box-sizing:border-box;
+        ">
+            📢<br><br>
+            Para visualizar el estado de los lotes<br>
+            (LIBRE, RESERVADO o VENDIDO)<br><br>
+            ingrese al tour desde una computadora.
+        </div>
+    `;
 
     setTimeout(() => {
 
-        document.getElementById(
-            "mensajeMovil"
-        ).style.display = "none";
+        document.body.innerHTML = "";
 
     }, 5000);
 
