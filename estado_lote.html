@@ -130,9 +130,41 @@ else{
         "Modo móvil: actualización desactivada"
     );
 
+    document.getElementById(
+        "mensajeMovil"
+    ).style.display = "block";
+
+    setTimeout(() => {
+
+        document.getElementById(
+            "mensajeMovil"
+        ).style.display = "none";
+
+    }, 5000);
+
 }
 
 </script>
 
 </body>
+<div id="mensajeMovil" style="
+    display:none;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.85);
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
+    text-align:center;
+    font-family:Arial,sans-serif;
+    font-size:14px;
+    z-index:9999;
+    max-width:80%;
+">
+    📢 Para visualizar el estado de los lotes<br>
+    <b>(LIBRE, RESERVADO o VENDIDO)</b><br>
+    ingrese al tour desde una computadora.
+</div>
 </html>
