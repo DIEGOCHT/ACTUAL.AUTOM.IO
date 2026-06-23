@@ -65,34 +65,40 @@ async function actualizarColor(){
             }
         );
 
-        const datos = await response.json();
-
         const fila = datos.find(item => {
 
-            const idLote = String(item.ID_LOTE || "")
-                .trim()
-                .replace(/\s+/g," ");
+    const idLote = String(item.Lote || "")
+        .trim()
+        .replace(/\s+/g," ");
 
-            const loteBuscado = String(LOTE || "")
-                .trim()
-                .replace(/\s+/g," ");
+    const loteBuscado = String(LOTE || "")
+        .trim()
+        .replace(/\s+/g," ");
 
-            return idLote === loteBuscado;
+    return idLote === loteBuscado;
 
-        });
+});
 
         if(!fila){
             return;
         }
 
-        const color =
-            String(fila.COLOR || "FFFF00")
-            .replace("#","")
-            .trim();
+        const estado = String(fila.Estado || "")
+    .trim()
+    .toUpperCase();
 
-        const opacidad =
-            String(fila.OPACIDAD || "0.30")
-            .trim();
+let color = "FFFF00";
+let opacidad = "0.30";
+
+if(estado === "VENDIDO"){
+    color = "FF0000";
+}
+else if(estado === "RESERVADO"){
+    color = "00FFFF";
+}
+else if(estado === "LIBRE"){
+    color = "FFFF00";
+}
 
         fondo.setAttribute(
             "fill",
