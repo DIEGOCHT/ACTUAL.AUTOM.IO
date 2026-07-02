@@ -25,8 +25,7 @@ svg{
 
 <svg viewBox="0 0 100 100" preserveAspectRatio="none">
 
-```
-<rect
+    <rect
     id="fondo"
     x="0"
     y="0"
@@ -35,18 +34,21 @@ svg{
     fill="#FFFFFF"
     fill-opacity="0">
 </rect>
-```
 
 </svg>
-
 <script>
+console.log("Estado:", location.origin);
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbzju385U93y9LzS-yStDOsO9i2vo97oAS-VaKRkMsV3giDUud34jAB5pbwvDior0tbN/exec";
 
 const params = new URLSearchParams(window.location.search);
 const LOTE = params.get("lote");
+
+console.log("================================");
+console.log("INICIO:", LOTE);
 console.log("LOTE URL:", LOTE);
+console.log("================================");
 
 const fondo = document.getElementById("fondo");
 
@@ -58,28 +60,21 @@ async function actualizarColor(){
 
     try{
 
-        const response = await fetch(
-            API_URL + "?t=" + Date.now(),
-            {
-                cache:"no-store"
-            }
-        );
+        const datos = JSON.parse(
+    localStorage.getItem("LOTES_CACHE") || "{}"
+);
 
-        const datos = await response.json();
+        const loteBuscado = String(LOTE || "")
+    .trim()
+    .replace(/\s+/g," ");
 
-        const fila = datos.find(item => {
+console.log("LOTE BUSCADO:", loteBuscado);
 
-            const idLote = String(item.Lote || "")
-                .trim()
-                .replace(/\s+/g," ");
+console.log("CLAVES CACHE:", Object.keys(datos));
 
-            const loteBuscado = String(LOTE || "")
-                .trim()
-                .replace(/\s+/g," ");
+const fila = datos[loteBuscado];
 
-            return idLote === loteBuscado;
-
-        });
+console.log("FILA:", fila);
 
         if(!fila){
             console.log("Lote no encontrado:", LOTE);
@@ -103,8 +98,9 @@ async function actualizarColor(){
             color = "FFFF00";
         }
 
-        fondo.setAttribute("fill","#" + color);
-        fondo.setAttribute("fill-opacity",opacidad);
+        fondo.setAttribute("fill","#"+color);
+fondo.setAttribute("fill-opacity",opacidad);
+console.log("PINTADO:", LOTE);
 
         console.log(
             "Lote:",
@@ -122,16 +118,23 @@ async function actualizarColor(){
 
 }
 
-if(!esMovil){
+setTimeout(function(){
 
     actualizarColor();
 
-    setInterval(
-        actualizarColor,
-        5000
-    );
+},1000);
 
-}
+const canal = new BroadcastChannel("LOTES");
+
+canal.onmessage = function(e){
+
+    if(e.data.tipo==="CACHE_ACTUALIZADA"){
+
+        actualizarColor();
+
+    }
+
+};
 
 </script>
 
