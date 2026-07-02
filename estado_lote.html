@@ -66,7 +66,13 @@ async function actualizarColor(){
     .trim()
     .replace(/\s+/g," ");
 
+console.log("LOTE BUSCADO:", loteBuscado);
+
+console.log("CLAVES CACHE:", Object.keys(datos));
+
 const fila = datos[loteBuscado];
+
+console.log("FILA:", fila);
 
         if(!fila){
             console.log("Lote no encontrado:", LOTE);
