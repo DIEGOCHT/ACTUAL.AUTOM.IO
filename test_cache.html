@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Cache</h2>
+
+<pre id="salida"></pre>
+
+<script>
+
+const datos = localStorage.getItem("LOTES_CACHE");
+
+document.getElementById("salida").textContent =
+datos || "NO EXISTE";
+
+</script>
+
+</body>
+</html>
