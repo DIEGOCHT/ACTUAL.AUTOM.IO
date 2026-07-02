@@ -113,7 +113,21 @@ if(!esMovil){
 
     actualizarColor();
 
-    
+    // Escuchar cuando la cache cambie
+    const canal = new BroadcastChannel("LOTES");
+
+    canal.onmessage = function(e){
+
+        if(e.data.tipo === "CACHE_ACTUALIZADA"){
+
+            console.log("Cache actualizada, repintando:", LOTE);
+
+            actualizarColor();
+
+        }
+
+    };
+
 }
 
 </script>
